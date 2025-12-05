@@ -1,7 +1,7 @@
-/* ¥ı³]©wª©­±©³¹Ï */
+/* å…ˆè¨­å®šç‰ˆé¢åº•åœ– */
 :root{
---bg: #0f1226;
---text: #e7e8ee;
+--bg: #bec5f9;
+--text: #21264a;
 --x: #ff6b6b;
 --o: #4dd0e1;
 --win: #ffe066;
@@ -12,35 +12,34 @@ body{
  margin:0; font-family: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
  background:var(--bg); color:var(--text); display:grid; place-items:center; padding:24px;
 }
-/* ¦A³]­pmainªº³¡¤À»Ph1 */
-.container{ width: min(720px, 96%); text-align:center; }
+/* å†è¨­è¨ˆmainçš„éƒ¨åˆ†èˆ‡h1 */
+.container{ width: min(720px, 96%); text-align:center; place-items:center;}
 h1{ margin:0 0 16px 0; font-size:24px; }
 .status{ margin-bottom:12px; }
-/* ³]­p´Ñ½L<section id="board" class="board" aria-label="¤«¦r´Ñ´Ñ½L"> */
+/* è¨­è¨ˆæ£‹ç›¤<section id="board" class="board" aria-label="äº•å­—æ£‹æ£‹ç›¤"> */
 .board{
 display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;
-background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+background: linear-gradient(180deg, rgb(52, 70, 72), #0f1226);
 padding:12px; border-radius:14px; width:min(560px, 92%); aspect-ratio:1/1;
 }
-/* ³]­p´Ñ½L®æ<button class="cell" data-idx="0" > */
+/* è¨­è¨ˆæ£‹ç›¤æ ¼<button class="cell" data-idx="0" > */
 .cell{
-border-radius:10px; background:linear-gradient(180deg,#121430,#0e1030); border:1px solid rgba(255,255,255,0.03);
+border-radius:10px; background:linear-gradient(180deg,#ffffff,#dde7ea); border:1px solid rgba(255,255,255,0.03);
 font-size:48px; font-weight:800; display:grid; place-items:center;
 cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent;
 }
 .cell.x{ color:var(--x); }
 .cell.o{ color:var(--o); }
 .cell.win{ background:var(--win); color:#000; }
-/* ³]­pResetÁä³B<div class=¡§controls¡¨>»Pbutton */
-.controls{ margin-top:12px; }
+/* è¨­è¨ˆResetéµè™•<div class=â€œcontrolsâ€>èˆ‡button */
+.controls{ margin-top:12px; color: #dee1f5; }
 button{ padding:8px 12px; border-radius:10px; border:0; background:#21264a; color:var(--text);
-cursor:pointer; }
+cursor:pointer;text-align: center; }
 button:disabled{ opacity:.5; cursor:not-allowed; }
 
-.scoreboard{ margin-top:16px; text-align:left; display:inline-block; }
+.scoreboard{ margin-top:16px; text-align:left; display:inline-block; place-items:center; }
 .scoreboard h2{ margin-bottom:8px; font-size:18px; }
 .controls{ margin-top:12px; }
 button{ padding:8px 12px; border-radius:10px; border:0;
 background:#21264a; color:var(--text); cursor:pointer; }
 button:disabled{ opacity:.5; cursor:not-allowed; }
-
