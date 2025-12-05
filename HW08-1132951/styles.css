@@ -18,7 +18,7 @@ h1{ margin:0 0 16px 0; font-size:24px; }
 .status{ margin-bottom:12px; }
 /* 設計棋盤<section id="board" class="board" aria-label="井字棋棋盤"> */
 .board{
-display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;
+display:grid; grid-template-columns: repeat(3, 1fr);grid-template-rows: repeat(3, 1fr); gap:12px;
 background: linear-gradient(180deg, rgb(52, 70, 72), #0f1226);
 padding:12px; border-radius:14px; width:min(560px, 92%); aspect-ratio:1/1;
 }
@@ -43,3 +43,10 @@ button:disabled{ opacity:.5; cursor:not-allowed; }
 button{ padding:8px 12px; border-radius:10px; border:0;
 background:#21264a; color:var(--text); cursor:pointer; }
 button:disabled{ opacity:.5; cursor:not-allowed; }
+
+#reset {
+    color: #e7e8f0;
+}
+#reset-all {
+    color: #e7e8f0;
+}
