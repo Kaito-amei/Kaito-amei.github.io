@@ -1,4 +1,4 @@
-// ªì©lÅÜ¼Æ
+// åˆå§‹è®Šæ•¸
 const boardE1 = document.getElementById('board');
 const cells = Array.from(document.querySelectorAll('.cell'));
 const btnReset = document.getElementById('reset');
@@ -6,13 +6,13 @@ const btnResetAll = document.getElementById('reset-all');
 const turnEl = document.getElementById('turn');
 const stateEl = document.getElementById('state');
 let board, current, active;
-//¤T®æ¦¨ª½½uª¬ºA
+//ä¸‰æ ¼æˆç›´ç·šç‹€æ…‹
 const WIN_LINES = [
     [0,1,2],[3,4,5],[6,7,8], // rows
     [0,3,6],[1,4,7],[2,5,8], // cols
     [0,4,8],[2,4,6] // diags
 ];
-// °_©l¨ç¦¡
+// èµ·å§‹å‡½å¼
 function init(){
     board = Array(9).fill('');
     current = 'X';
@@ -25,7 +25,7 @@ function init(){
     turnEl.textContent = current;
     stateEl.textContent = '';
 }
-// ¤U¤â
+// ä¸‹æ‰‹
 function place(idx){
     if(!active || board[idx]) return;
     board[idx] = current;
@@ -39,12 +39,12 @@ function place(idx){
     switchTurn();
     }
 }
-// ´«¤â¨ç¦¡
+// æ›æ‰‹å‡½å¼
 function switchTurn(){
     current = current==='X' ? 'O' : 'X';
     turnEl.textContent = current;
 }
-// ¤U¤â«á­pºâ¬O§_¦¨¤@½uµ²§ô¹CÀ¸ªº¨ç¦¡
+// ä¸‹æ‰‹å¾Œè¨ˆç®—æ˜¯å¦æˆä¸€ç·šçµæŸéŠæˆ²çš„å‡½å¼
 function evaluate(){
     for(const line of WIN_LINES){
     const [a,b,c] = line;
@@ -55,14 +55,14 @@ function evaluate(){
     if(board.every(v=>v)) return { finished:true, winner:null };
     return { finished:false };
 }
-// ½T»{¬O§_µ²§ô¹CÀ¸
+// ç¢ºèªæ˜¯å¦çµæŸéŠæˆ²
 function endGame({winner, line}){
     active = false;
     if(winner){
-    stateEl.textContent = `${winner} ³Ó§Q¡I`;
+    stateEl.textContent = `${winner} å‹åˆ©ï¼`;
     line.forEach(i=> cells[i].classList.add('win'));
     }else{
-    stateEl.textContent = '¥­¤â';
+    stateEl.textContent = 'å¹³æ‰‹';
     }
     cells.forEach(c=> c.disabled = true);
 }
@@ -76,43 +76,43 @@ cells.forEach(cell=>{
 btnReset.addEventListener('click', init);
 //
 init();
-// ­p¤ÀªO¤¸¯À
+// è¨ˆåˆ†æ¿å…ƒç´ 
 const scoreXEl = document.getElementById('score-x');
 const scoreOEl = document.getElementById('score-o');
 const scoreDrawEl = document.getElementById('score-draw');
 
-// ­p¤À¥ÎÅÜ¼Æ
+// è¨ˆåˆ†ç”¨è®Šæ•¸
 let scoreX = 0;
 let scoreO = 0;
 let scoreDraw = 0;
 /**
-* ¹CÀ¸µ²§ô¡A³B²z³Ó§Q©Î¥­¤â
+* éŠæˆ²çµæŸï¼Œè™•ç†å‹åˆ©æˆ–å¹³æ‰‹
 * @param {object} param0 - {winner, line}
 */
 function endGame({winner, line}){
     active = false;
     if(winner){
-        stateEl.textContent = `${winner} ³Ó§Q¡I`;
+        stateEl.textContent = `${winner} å‹åˆ©ï¼`;
         line.forEach(i=> cells[i].classList.add('win'));
         if(winner==='X') scoreX++; else scoreO++;
     }else{
-        stateEl.textContent = '¥­¤â';
+        stateEl.textContent = 'å¹³æ‰‹';
         scoreDraw++;
     }
     updateScoreboard();
     cells.forEach(c=> c.disabled = true);
 }
 /**
-* §ó·s­p¤ÀªO¼Æ¦r
+* æ›´æ–°è¨ˆåˆ†æ¿æ•¸å­—
 */
 function updateScoreboard(){
     scoreXEl.textContent = scoreX;
     scoreOEl.textContent = scoreO;
     scoreDrawEl.textContent = scoreDraw;
 }
-// ¸j©w¨Æ¥ó¡G­«¶}¹CÀ¸¡]«O¯d¤À¼Æ¡^
+// ç¶å®šäº‹ä»¶ï¼šé‡é–‹éŠæˆ²ï¼ˆä¿ç•™åˆ†æ•¸ï¼‰
 btnReset.addEventListener('click', init);
-// ¸j©w¨Æ¥ó¡G­«¸m­p¤À¡]³s¦P¹CÀ¸¡^
+// ç¶å®šäº‹ä»¶ï¼šé‡ç½®è¨ˆåˆ†ï¼ˆé€£åŒéŠæˆ²ï¼‰
 btnResetAll.addEventListener('click', ()=>{
     scoreX = scoreO = scoreDraw = 0;
     updateScoreboard();
