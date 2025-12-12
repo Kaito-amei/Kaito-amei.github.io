@@ -23,7 +23,7 @@ function init() {
     if (!active || board[i]) return;
     board[i] = 'X';
     updateBoard();
-    if (checkWin('X')) {
+    if (checkWin(board, 'X')) {
     endGame('玩家 (X) 勝利！');
     return;
     } else if (isFull()) {
@@ -35,69 +35,36 @@ function init() {
     setTimeout(computerMove, 700); // 模擬電腦思考時間
 }
 // 電腦AI下棋邏輯
+// 電腦AI下棋邏輯 (Minimax 完美版)
 function computerMove() {
-    // 1. 嘗試自己獲勝
-    let move = findWinningMove('O');
-    // 2. 嘗試阻止玩家獲勝
-    if (move === null) move = findWinningMove('X');
-    // 3. 佔領中心
-    if (move === null) move = 4;
-    // 4. 佔領角位
-    if (move === null) move = findCornerMove();
-    // 5. 否則隨機下在空格
-    if (move === null) move = getRandomMove();
+    if (!active) return;
     
-    if (move === null || board[move] !== null) {
-        // 如果找不到合法的移動，或者找到的位置已經被佔用（理論上不應發生）
-        // 我們強制使用最後的隨機移動作為安全網
-        move = getRandomMove();
-        // 如果連隨機移動都找不到 (表示棋盤滿了)，則直接返回，等待 isFull 判斷
-        if (move === null) {
-            current = 'X';
-            document.getElementById('status').innerText = '輪到玩家 (X)';
-            return; 
-        }
+    // Minimax 演算法會找到最佳移動 (獲勝或至少平手)
+    let move = getBestMove(); 
+    
+    // 如果棋盤滿了，getBestMove 可能返回 null，但這應該被 isFull 捕捉
+    if (move === null) {
+         // 這表示棋盤已滿，但未判斷出勝負 (即平手)
+        current = 'X';
+        document.getElementById('status').innerText = '輪到玩家 (X)';
+        return; 
     }
-    
+
+    // 執行最佳下棋
     board[move] = 'O';
     updateBoard();
-    if (checkWin('O')) {
+    
+    // 遊戲狀態檢查
+    if (checkWin(board, 'O')) { // 注意這裡使用了修正後的 checkWin(board, player)
         endGame('電腦 (O) 勝利！');
         return;
     } else if (isFull()) {
         endGame('平手！');
         return;
     }
+
     current = 'X';
     document.getElementById('status').innerText = '輪到玩家 (X)';
-}
-// 找到可立即獲勝的位置
-function findWinningMove(player) {
-    const wins = [
-    [0,1,2],[3,4,5],[6,7,8],
-    [0,3,6],[1,4,7],[2,5,8],
-    [0,4,8],[2,4,6]
-    ];
-    for (let [a,b,c] of wins) {
-        const line = [board[a], board[b], board[c]];
-        if (line.filter(v => v === player).length === 2 && line.includes(null)) {
-            return [a,b,c][line.indexOf(null)];
-        }
-    }
-    return null;
-}
-//找角角
-function findCornerMove(){
-    const corners = [0,2,6,8];
-    for(let i of corners){
-        if(board[i] === null)return i;
-    }
-    return null;
-}
-// 隨機選擇空格
-function getRandomMove() {
-const empty = board.map((v, i) => v ? null : i).filter(v => v !== null);
-return empty[Math.floor(Math.random() * empty.length)];
 }
 // 更新畫面
    function updateBoard() {
@@ -107,13 +74,13 @@ return empty[Math.floor(Math.random() * empty.length)];
    }
    }
     // 判斷勝利
-   function checkWin(player) {
+   function checkWin(currentBoard, player) {
    const wins = [
    [0,1,2],[3,4,5],[6,7,8],
    [0,3,6],[1,4,7],[2,5,8],
    [0,4,8],[2,4,6]
    ];
-   return wins.some(([a,b,c]) => board[a] === player && board[b] === player && board[c] === player);
+   return wins.some(([a,b,c]) => currentBoard[a] === player && currentBoard[b] === player && currentBoard[c] === player);
    }
     // 判斷是否平手
    function isFull() {
@@ -130,3 +97,66 @@ return empty[Math.floor(Math.random() * empty.length)];
    }
    // 初始化
    init();
+// Minimax 演算法：計算當前局面的最佳分數
+function minimax(newBoard, player) {
+    // 終止條件：如果電腦獲勝 (+10)
+    if (checkWin(newBoard, 'O')) {
+        return 10;
+    } 
+    // 終止條件：如果玩家獲勝 (-10)
+    else if (checkWin(newBoard, 'X')) {
+        return -10;
+    } 
+    // 終止條件：如果平手 (0)
+    else if (newBoard.every(cell => cell !== null)) {
+        return 0;
+    }
+
+    const availableMoves = newBoard.map((v, i) => v === null ? i : null).filter(v => v !== null);
+    let bestScore;
+
+    if (player === 'O') { // 電腦 (Maximizer)
+        bestScore = -Infinity;
+        for (let i of availableMoves) {
+            newBoard[i] = 'O';
+            let score = minimax(newBoard, 'X'); // 換成玩家回合
+            newBoard[i] = null; // 撤銷移動
+            bestScore = Math.max(bestScore, score);
+        }
+    } else { // 玩家 (Minimizer)
+        bestScore = Infinity;
+        for (let i of availableMoves) {
+            newBoard[i] = 'X';
+            let score = minimax(newBoard, 'O'); // 換成電腦回合
+            newBoard[i] = null; // 撤銷移動
+            bestScore = Math.min(bestScore, score);
+        }
+    }
+    return bestScore;
+}
+// 遍歷所有空位，呼叫 Minimax 找到最佳的移動位置
+function getBestMove() {
+    let bestScore = -Infinity;
+    let move = null;
+    
+    // 獲取所有空的索引
+    const availableMoves = board.map((v, i) => v === null ? i : null).filter(v => v !== null);
+
+    for (let i of availableMoves) {
+        // 1. 嘗試下這一步
+        board[i] = 'O';
+        
+        // 2. 呼叫 minimax，計算這一步之後的局面分數 (此時 Minimax 從玩家 X 回合開始計算)
+        let score = minimax(board, 'X');
+        
+        // 3. 撤銷這一步 (恢復棋盤，因為我們只是在模擬)
+        board[i] = null;
+        
+        // 4. 判斷是否為最佳移動
+        if (score > bestScore) {
+            bestScore = score;
+            move = i;
+        }
+    }
+    return move; // 回傳帶有最高分數的索引
+}
