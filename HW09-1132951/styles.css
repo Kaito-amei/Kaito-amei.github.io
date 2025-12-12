@@ -1,0 +1,86 @@
+/* 先設定版面底圖 */
+:root{
+--bg: #ffe88a;
+--text: #21264a;
+--x: #ff6b6b;
+--o: #4dd0e1;
+--win: #fcd22a;
+}
+@font-face {
+    font-family: 'PixelFont-CN'; /* 給這個字體取一個名稱 */
+    src:url('fonts/Cubic_11.woff2') format('woff2'),
+        url('fonts/Cubic_11.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+*{box-sizing:border-box}
+html,body{height:100%;}
+body{
+ margin:0; font-family: 'PixelFont-CN', system-ui, -apple-system, sans-serif;image-rendering: pixelated;
+ background:var(--bg); color:var(--text); display:grid; place-items:center; padding:24px;
+ background-image: url('images/9277762.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;
+}
+/* main */
+.container{ 
+    display:flex;
+    flex-direction: column;
+    width: min(720px, 96%); 
+    text-align:center; 
+    place-items:center; 
+    background:#ffffff; 
+    padding:20px; 
+    border-radius:16px;
+    border: solid;
+}
+h1{ margin:0 0 16px 0; font-size:24px; }
+.status{ display: block; margin-bottom:12px;}
+/* 棋盤 */
+.board{
+    display:grid; place-items: center;
+    grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap:12px;
+    background: rgb(95, 162, 166);position: relative; border: 4px solid #333;
+    margin-top: 12px; margin-bottom: 18px; padding:12px; width:min(560px, 92%); aspect-ratio:1/1; border-radius:14px;
+}
+#winnerLine{
+    position: absolute;
+    background-color: #90ffb0;
+    height: 1.5%;
+    z-index: 10;
+    opacity: 0;
+    border-radius:14px;
+    transform-origin: left top;
+    transition: opacity 0.5s;
+}
+.cell:hover{ background:#e4e8fc; }
+/* 棋盤格 */
+.cell{
+    background:#ffffff;
+    display:flex; place-items:center;
+    cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent; border-radius:10px;
+    font-family: "Pixelify Sans", sans-serif;font-weight: 700;
+    justify-content: center;
+    align-items: center;
+    width: 90%; 
+    height: 90%;
+    border: 4px solid #333;
+    font-size: 58px;
+}
+.cell.x{ color:var(--x); }
+.cell.o{ color:var(--o); }
+.cell.win{ background:var(--win); color:#000; }
+
+/* Reset button */
+.controls{ margin-top:12px; color: #dee1f5; }
+button{ padding:8px 12px; border-radius:10px; border:0; background:#21264a; color:var(--text);
+cursor:pointer;text-align: center; }
+button:disabled{ opacity:.5; cursor:not-allowed; }
+.controls button:hover{background:#3f4673; }
+#reset {
+    color: #e7e8f0;
+    margin:0; font-family: 'PixelFont-CN', system-ui, -apple-system, sans-serif;image-rendering: pixelated;
+    margin-bottom: 20px; border: 2px solid #ffffff;
+}
+/* 樓溝 */
+#logo{
+    margin: 0 0 30px
+}
