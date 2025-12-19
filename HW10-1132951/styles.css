@@ -1,4 +1,4 @@
-﻿body {
+body {
     font-family: "Microsoft JhengHei", sans-serif;
     background-color: #f0f2f5;
     display: flex;
@@ -15,10 +15,9 @@
     border-radius: 15px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     position: relative;
-    /* 這裡不要設 z-index，讓內部元素自然堆疊 */
+    width: 65%;
 }
 
-/* --- 重點修正區域 --- */
 .controls {
     margin-bottom: 15px;
     display: flex;
@@ -72,15 +71,15 @@ select {
 
 #status {
     margin-bottom: 15px;
-    color: #d32f2f;
+    color: #ff980a;
     font-weight: bold;
     height: 24px;
 }
 
 .board {
     display: grid;
-    grid-template-columns: repeat(8, 50px);
-    grid-template-rows: repeat(8, 50px);
+    grid-template-columns: repeat(8, 70px);
+    grid-template-rows: repeat(8, 70px);
     gap: 2px;
     background-color: #2e7d32;
     border: 5px solid #1b5e20;
@@ -95,8 +94,8 @@ select {
 
 .cell {
     background-color: #4caf50;
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     position: relative;
     cursor: default;
     display: flex;
@@ -129,8 +128,8 @@ select {
 
 /* 3D 棋子設定 */
 .piece {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
     
