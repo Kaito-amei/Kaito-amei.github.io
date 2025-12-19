@@ -1,0 +1,284 @@
+@font-face {
+    font-family: 'MyGameFont';
+    src: url('fonts/UoqMunThenKhung-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* --- 1. 全局設定 --- */
+body {
+    font-family: 'MyGameFont', "Microsoft JhengHei", sans-serif;
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 讓整個遊戲區塊在畫面正中間 */
+    
+    padding: 20px; 
+    box-sizing: border-box; 
+
+    background-image: url('images/lukas-blazek-EWDvHNNfUmQ-unsplash.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
+}
+
+#logo {
+    margin: 20px;
+    max-width: 50%;
+    /* 這裡可能需要調整，視你的 logo 大小而定 */
+    display: none; /* 暫時隱藏，除非你有要放 */
+}
+
+/* --- 2. 主容器 (響應式核心) --- */
+.main-wrapper {
+    width: 100%;
+    max-width: 500px; /* 手機版預設寬度 */
+    margin: auto;
+    
+    display: flex;
+    flex-direction: column; /* 手機版：垂直排列 */
+    gap: 15px;
+}
+
+/* --- 桌面版佈局 (當螢幕變寬時) --- */
+@media (min-width: 850px) { /* 850px 以上轉為橫向 */
+    .main-wrapper {
+        flex-direction: row; /* 改為左右排列 */
+        max-width: 900px;    /* 寬度放寬 */
+        align-items: stretch; /* 讓左右兩邊等高 */
+    }
+
+    /* 左側邊欄 (控制 + 計分) */
+    .sidebar {
+        flex: 1; /* 佔據 1 份空間 */
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        min-width: 300px; /* 最小寬度，避免太擠 */
+    }
+
+    /* 右側棋盤區 */
+    .board-section {
+        flex: 1.5; /* 佔據 1.5 份空間，讓棋盤大一點 */
+    }
+    
+    /* 讓棋盤區稍微高一點，對齊左邊內容 */
+    .board {
+        max-width: 500px; /* 棋盤可以再大一點 */
+    }
+}
+
+/* --- 3. 通用卡片樣式 --- */
+.game-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+/* --- 區塊 1: 控制區 --- */
+.control-section h1 {
+    color: #5d4037;
+    margin: 0 0 15px 0;
+    font-size: 1.6rem;
+}
+
+.controls-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.buttons-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+button {
+    font-family: 'MyGameFont', "Microsoft JhengHei", sans-serif;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.btn-primary {
+    background-color: #5c4e4e;
+    color: white;
+}
+.btn-primary:hover { background-color: #877e7e; transform: translateY(-2px); }
+
+.btn-danger {
+    background-color: #e06634;
+    color: white;
+}
+.btn-danger:hover { background-color: #ec8c4a; transform: translateY(-2px); }
+
+select {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+}
+
+/* --- 區塊 2: 計分區 --- */
+.score-title {
+    font-size: 1rem;
+    color: #8d6e63;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.scoreboard {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #3e2723;
+}
+
+.score-box {
+    background: rgba(255,255,255,0.6);
+    padding: 8px 15px;
+    border-radius: 50px;
+    border: 1px solid rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.indicator {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+}
+.black-score .indicator { background: #333; }
+.white-score .indicator { background: #fff; }
+
+.divider {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 15px 20px;
+}
+
+.history-board {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-size: 1rem;
+    color: #555;
+}
+.history-board b { color: #ad614a; }
+
+/* --- 區塊 3: 棋盤區 --- */
+.board-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1; 
+}
+
+#status {
+    margin-bottom: 15px;
+    color: #78564b;
+    font-weight: bold;
+    height: 24px;
+    font-size: 1.1rem;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    gap: 4px;
+    
+    background-color: #d7ccc8;
+    border: 8px solid #efebe9;
+    padding: 4px;
+    border-radius: 10px;
+    
+    width: 100%;
+    /* 手機版最大寬度 */
+    max-width: 450px; 
+    aspect-ratio: 1 / 1;
+    
+    box-shadow: inset 0 2px 5px rgba(255,255,255,0.8);
+    position: relative;
+}
+
+.cell {
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    position: relative;
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 1px 1px 3px rgba(0,0,0,0.08), inset -1px -1px 2px rgba(255,255,255,1);
+}
+
+.cell.valid-move { cursor: pointer; }
+.cell.valid-move:hover { background-color: #eeeeee; }
+
+.hint {
+    width: 40%;
+    height: 40%;
+    border-radius: 50%;
+    background-color: rgba(93, 64, 55, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #795548;
+    font-size: 0.8rem;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+/* 棋子樣式 */
+.piece {
+    width: 85%;
+    height: 85%;
+    border-radius: 50%;
+    box-shadow: 2px 4px 6px rgba(0,0,0,0.3);
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease-in-out; 
+    z-index: 10;
+}
+.piece.black { background: radial-gradient(circle at 35% 35%, #555, #1a1a1a); }
+.piece.white { background: radial-gradient(circle at 35% 35%, #fff, #e0e0e0); border: 1px solid #ccc; }
+
+/* --- RWD 手機優化 (螢幕小於 850px 時) --- */
+@media (max-width: 849px) {
+    .main-wrapper { 
+        gap: 15px; 
+        max-width: 500px; /* 手機版維持原本的窄版 */
+    }
+    
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .game-card { padding: 15px; }
+    h1 { font-size: 1.3rem; }
+    .scoreboard { gap: 10px; font-size: 1rem; }
+    button { padding: 8px 15px; font-size: 0.95rem; }
+}

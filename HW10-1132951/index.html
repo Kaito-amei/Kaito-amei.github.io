@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>3D 黑白棋 - 戰績版</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="main-wrapper">
+        
+        <div class="sidebar">
+            
+            <div class="game-card control-section">
+                <h1>黑白棋大戰</h1>
+                <div class="controls-row">
+                    <label>
+                        難度：
+                        <select id="difficulty">
+                            <option value="easy">基本</option>
+                            <option value="hard" selected>進階</option>
+                        </select>
+                    </label>
+                    <div class="hint-toggle">
+                        <input type="checkbox" id="showHints" checked>
+                        <label for="showHints">提示</label>
+                    </div>
+                </div>
+                <div class="buttons-row">
+                    <button class="btn-primary" onclick="nextRound()">再來一局</button>
+                    <button class="btn-danger" onclick="fullReset()">全部重置</button>
+                </div>
+            </div>
+
+            <div class="game-card score-section">
+                <div class="score-title">本局比分</div>
+                <div class="scoreboard">
+                    <div class="score-box black-score">
+                        <span class="indicator"></span> 黑棋: <span id="scoreBlack">2</span>
+                    </div>
+                    <div class="score-box white-score">
+                        <span class="indicator"></span> 白棋: <span id="scoreWhite">2</span>
+                    </div>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="score-title">歷史戰績</div>
+                <div class="history-board">
+                    <span>玩家勝: <b id="historyWin">0</b></span>
+                    <span>電腦勝: <b id="historyLose">0</b></span>
+                    <span>平手: <b id="historyDraw">0</b></span>
+                </div>
+            </div>
+
+        </div> <div class="game-card board-section">
+            <div id="status">輪到你了！</div>
+            <div id="board" class="board"></div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
