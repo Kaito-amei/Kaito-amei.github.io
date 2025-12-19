@@ -31,7 +31,6 @@ body {
     margin: 20px;
     max-width: 50%;
     /* 這裡可能需要調整，視你的 logo 大小而定 */
-    display: none; /* 暫時隱藏，除非你有要放 */
 }
 
 /* --- 2. 主容器 (響應式核心) --- */
@@ -282,3 +281,4 @@ select {
     .scoreboard { gap: 10px; font-size: 1rem; }
     button { padding: 8px 15px; font-size: 0.95rem; }
 }
+
