@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11XXXXX -FinalTerm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol&family=Noto+Emoji:wght@300..700&family=Pixelify+Sans:wght@400..700&family=Playwrite+AU+SA:wght@100..400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="info-panel">
+            <h1>九路圍棋</h1>
+            
+            <div class="stats-row">
+                <div class="stats-info">
+                    戰績：黑 <span id="totalBlackWins">0</span> 勝 | 白 <span id="totalWhiteWins">0</span> 勝
+                </div>
+                <button class="reset-stats-btn" onclick="resetStats()" title="重置戰績">↺</button>
+            </div>
+
+            <div class="status" id="status">🖤 黑棋先手，請放鬆心情下棋</div>
+
+            <div class="score">
+                <div class="black-score">黑棋 <span id="blackScore">0</span></div>
+                <div class="white-score">白棋 <span id="whiteScore">0</span></div>
+            </div>
+
+            <div class="controls">
+                <button id="undoBtn">悔棋</button>
+                <button class="primary-btn" onclick="newGame()">新局</button>
+                <button class="pass-btn" id="passBtn">虛手</button>
+                <button id="aiBtn" onclick="toggleAI()">AI 對弈</button>
+            </div>
+            
+            <div id="passInfo">連續虛手: <span id="passCount">0</span>/2</div>
+        </div>
+
+        <div class="board-panel">
+            <div id="board"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
